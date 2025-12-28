@@ -320,7 +320,7 @@ class QuizApp:
             layer = pdk.Layer(
                 "ScatterplotLayer",
                 data=map_data,
-                get_position=["lon", "lat"],
+                get_position=[lon, lat],
                 get_radius=500,
                 get_fill_color=[255, 0, 0],
                 pickable=True,

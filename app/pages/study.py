@@ -120,7 +120,7 @@ def question(data, area_code, has_tip):
             with st.container(border=True):
                 st.write(
                     ":material/stacks:",
-                    len(municipalities) - len(ss.remaining_municipalities) - 1,
+                    len(municipalities) - len(ss.remaining_municipalities),
                     "/",
                     len(municipalities),
                 )

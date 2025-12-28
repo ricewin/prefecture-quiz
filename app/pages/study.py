@@ -160,6 +160,7 @@ def step2(has_tip):
     with st.sidebar:
         is_subprefecture = False
         zoom = 8
+        min_zoom = 6
         if pref == "北海道":
             zoom = 6
             sub = st.segmented_control(
@@ -170,6 +171,9 @@ def step2(has_tip):
                 help="北海道だけ特別だよ",
             )
             is_subprefecture = sub == "振興局"
+        elif pref == "東京都":
+            zoom = 9
+            min_zoom = 4
 
         area_code = 4
         if is_subprefecture:
@@ -180,13 +184,26 @@ def step2(has_tip):
 
     has_tip = question(data, area_code, has_tip)
 
+    lat, lon = None, None
+    if pref == "北海道":
+        # 北海道は北方四島も含めると右に寄りすぎるので固定
+        lat, lon = 43.5, 142.0
+    elif pref == "東京都":
+        # 東京都は島しょを含めた中心位置で描画すると海しか見えないので固定
+        lat, lon = 35.7, 139.4
+    elif pref == "沖縄県":
+        # 沖縄県も離島を含めた中心位置で描画すると遠くなるので固定
+        lat, lon = 26.5, 127.75
+
     make_map(
         data,
         has_tip=has_tip,
         zoom=zoom,
-        min_zoom=6,
+        min_zoom=min_zoom,
         area_code=area_code,
         map_provider="carto",
+        lat=lat,
+        lon=lon,
     )
 
 

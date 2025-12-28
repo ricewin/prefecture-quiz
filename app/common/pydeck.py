@@ -14,12 +14,12 @@ def make_map(
     max_zoom: int = 12,
     area_code: int = 1,
     map_provider: str | None = None,
+    lat: float | None = None,
+    lon: float | None = None,
 ):
     area = f"N03_00{area_code}"
 
-    if area_code == "prefecture":
-        lat, lon = 138, 33
-    else:
+    if None in (lat, lon):
         lat, lon = get_geojson_center(data)
 
     view_state = pdk.ViewState(

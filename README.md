@@ -18,10 +18,10 @@ ANNOUNCEMENT: This app uses open data content[^1].
 
 ## CONTENTS
 
-以下のモードを用意しています。
+以下のページを用意しています。
 
 1. 地図上に県庁所在地を表示し、都道府県をあてるクイズ
-1. 都道府県および市町村の場所を覚える
+1. 都道府県および市町村の場所を覚えるページ
 
 [^1]:
     出典：[国土交通省国土数値情報ダウンロードサイト](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2025.html)

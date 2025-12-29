@@ -148,6 +148,7 @@ def step1(has_tip):
         data,
         has_tip=has_tip,
         max_zoom=8,
+        get_line_width=1000,
     )
 
 

@@ -16,8 +16,12 @@ def make_map(
     map_provider: str | None = None,
     lat: float | None = None,
     lon: float | None = None,
+    get_line_width: int = 100,
 ):
-    area = f"N03_00{area_code}"
+    if has_tip:
+        area = f"<b>{{N03_00{area_code}}}</b>"
+    else:
+        area = "<b>どこかな？</b>"
 
     if None in (lat, lon):
         lat, lon = get_geojson_center(data)
@@ -32,57 +36,31 @@ def make_map(
         bearing=0,
     )
 
-    LAND_COVER = [[[122, 20], [122, 46], [154, 46], [154, 20]]]
-
-    filled = False
-    if map_provider is None:
-        filled = True
-
-    polygon = pdk.Layer(
-        "PolygonLayer",
-        LAND_COVER,
-        stroked=False,
-        get_polygon="-",
-        filled=filled,
-        get_fill_color=[0, 0, 20],
-    )
-
     geojson = pdk.Layer(
         "GeoJsonLayer",
         data,
         id="geojson",
         pickable=True,
         opacity=0.1,
-        get_fill_color=[255, 235, 215],
+        get_fill_color=[191, 101, 160],
         get_line_color=[255, 250, 205],
-        get_line_width=100,
+        get_line_width=get_line_width,
     )
 
-    if has_tip:
-        tooltip = {
-            "html": f"<b>{{{area}}}</b>",
-            "style": {
-                "background-color": "teal",
-                "color": "aliceblue",
-                "font-family": "Noto Sans JP, sans-serif",
-                "border-radius": "50% 20% / 10% 40%",
-            },
-        }
-    else:
-        tooltip = {
-            "html": "<b>どこかな？</b>",
-            "style": {
-                "background-color": "teal",
-                "color": "aliceblue",
-                "font-family": "Noto Sans JP, sans-serif",
-                "border-radius": "50% 20% / 10% 40%",
-            },
-        }
+    tooltip = {
+        "html": area,
+        "style": {
+            "background-color": "teal",
+            "color": "aliceblue",
+            "font-family": "Noto Sans JP, sans-serif",
+            "border-radius": "50% 20% / 10% 40%",
+        },
+    }
 
     r = pdk.Deck(
         map_style="dark_no_labels",
         map_provider=map_provider,  # type: ignore
-        layers=[polygon, geojson],
+        layers=[geojson],
         initial_view_state=view_state,
         tooltip=tooltip,  # type: ignore
     )

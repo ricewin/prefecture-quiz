@@ -93,17 +93,20 @@ def question(data, area_code, has_tip):
                     disabled=disable_answer,
                     on_click=answer_question,
                 ):
-                    obj = ss.event
-                    answer = obj.geojson[0]["properties"][f"N03_00{area_code}"]
-                    if correct == answer:
-                        st.toast("正解だよ！")
-                        ss.correct_count += 1
-                    else:
-                        st.toast("おしい！")
-                        if correct not in ss.wrong_answers:
-                            ss.wrong_answers.append(correct)
+                    if obj := ss.event:
+                        answer = obj.geojson[0]["properties"][f"N03_00{area_code}"]
 
-                    st.toast(f"{answer}を選択したよ")
+                        if correct == answer:
+                            st.toast("正解だよ！")
+                            ss.correct_count += 1
+                        else:
+                            st.toast("おしい！")
+                            if correct not in ss.wrong_answers:
+                                ss.wrong_answers.append(correct)
+
+                        st.toast(f"{answer}を選択したよ")
+                    else:
+                        st.toast("地図から選んでね")
 
                 st.button(
                     "チェンジ",

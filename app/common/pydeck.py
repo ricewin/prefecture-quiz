@@ -42,8 +42,8 @@ def make_map(
         id="geojson",
         pickable=True,
         opacity=0.1,
-        get_fill_color=[178, 255, 255],  # チェレステ
-        get_line_color=[136, 141, 144],  # スカイグレー
+        get_fill_color=[136, 141, 144],  # スカイグレー
+        get_line_color=[204, 0, 204],  # 紫色
         get_line_width=get_line_width,
     )
 
@@ -51,7 +51,7 @@ def make_map(
         "html": area,
         "style": {
             "background-color": "#515254",  # アスファルト
-            "color": "aliceblue",
+            "color": "#b2ffff",  # チェレステ
             "font-family": "Noto Sans JP, sans-serif",
             "border-radius": "50% 20% / 10% 40%",
         },

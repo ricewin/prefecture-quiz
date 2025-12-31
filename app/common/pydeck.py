@@ -42,16 +42,16 @@ def make_map(
         id="geojson",
         pickable=True,
         opacity=0.1,
-        get_fill_color=[191, 101, 160],
-        get_line_color=[255, 250, 205],
+        get_fill_color=[136, 141, 144],  # スカイグレー
+        get_line_color=[204, 0, 204],  # 紫色
         get_line_width=get_line_width,
     )
 
     tooltip = {
         "html": area,
         "style": {
-            "background-color": "teal",
-            "color": "aliceblue",
+            "background-color": "#515254",  # アスファルト
+            "color": "#b2ffff",  # チェレステ
             "font-family": "Noto Sans JP, sans-serif",
             "border-radius": "50% 20% / 10% 40%",
         },

@@ -1,16 +1,14 @@
 [project]
 name = "prefecture-quiz"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "ricewin", email = "hiroccha@gmail.com"}
-]
+description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 dependencies = [
-    "streamlit (>=1.52.2,<2.0.0)"
+    "streamlit>=1.53.0",
 ]
 
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.14.13",
+]

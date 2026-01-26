@@ -125,13 +125,13 @@
 #### 3.1.2 テスト実行方法
 ```bash
 # pytestを使用した単体テストの実行
-pytest tests/unit/ -v
+pytest tests/ -v
 
 # カバレッジ計測付きの実行
-pytest tests/unit/ --cov=app --cov-report=html
+pytest tests/ --cov=app --cov-report=html
 
 # 特定のテストファイルのみ実行
-pytest tests/unit/test_quiz.py -v
+pytest tests/test_quiz.py -v
 ```
 
 ### 3.2 統合テスト（Integration Tests）

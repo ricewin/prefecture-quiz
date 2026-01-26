@@ -423,7 +423,7 @@ mock_session_state = {
 | pytest-cov | カバレッジ測定 | pytestと統合されたカバレッジツール |
 | pytest-mock | モック作成 | セッション状態やStreamlitコンポーネントのモック化 |
 | ruff | Linting | 高速で設定可能なPython linter |
-| mypy | 型チェック | 静的型検査 |
+| Pyright | 型チェック | 静的型検査 |
 
 ### 10.2 CI/CD統合
 ```yaml

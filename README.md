@@ -23,6 +23,31 @@ ANNOUNCEMENT: This app uses open data content[^1].
 1. 地図上に県庁所在地を表示し、都道府県をあてるクイズ
 1. 都道府県および市町村の場所を覚えるページ
 
+## Development
+
+### Running Tests
+
+This project uses pytest for testing. To run the tests:
+
+```bash
+# Install dependencies with development packages
+uv sync
+
+# Run all tests
+uv run pytest
+
+# Run tests with coverage report
+uv run pytest --cov=app --cov-report=term-missing
+
+# Run specific test file
+uv run pytest tests/test_quiz.py
+
+# Run tests in verbose mode
+uv run pytest -v
+```
+
+For more details about the test plan, see [TEST_PLAN.md](TEST_PLAN.md).
+
 [^1]:
     出典：[国土交通省国土数値情報ダウンロードサイト](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2025.html)
     [「国土数値情報（行政区域データ）」（国土交通省）](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2025.html)を加工して作成

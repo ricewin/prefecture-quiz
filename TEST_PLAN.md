@@ -208,7 +208,7 @@ pytest tests/integration/ tests/e2e/ -v
 pytest tests/e2e/ -v
 
 # 手動テストチェックリストを使用する場合
-# TEST_CHECKLIST.mdを参照
+# 手動テストチェックリストを参照
 ```
 
 ### 3.4 パフォーマンステスト

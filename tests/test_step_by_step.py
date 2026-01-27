@@ -1,7 +1,6 @@
 """Unit tests for app/common/step_by_step.py"""
 
 import sys
-from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest

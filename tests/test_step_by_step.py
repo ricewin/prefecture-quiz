@@ -1,12 +1,10 @@
 """Unit tests for app/common/step_by_step.py"""
 
-import pytest
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock, Mock
+from unittest.mock import MagicMock
 
-# Add app directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent / "app"))
+import pytest
 
 
 class MockSessionState(dict):
@@ -21,96 +19,84 @@ class MockSessionState(dict):
         self[name] = value
 
 
-class TestStepByStep:
-    """Test cases for StepByStep class"""
+@pytest.fixture
+def step_by_step_factory(monkeypatch):
+    """Factory fixture to create StepByStep instances with a mocked Streamlit environment."""
 
-    def test_initialize_state(self):
-        """初期状態の設定"""
-        # Mock Streamlit session state
-        mock_session_state = MockSessionState()
-        
+    def _factory(initial_state=None):
+        # Prepare mock session state
+        mock_session_state = MockSessionState(initial_state or {})
+
         # Mock streamlit module
         mock_st = MagicMock()
         mock_st.session_state = mock_session_state
         mock_st.fragment = lambda cls: cls
-        
-        sys.modules['streamlit'] = mock_st
-        sys.modules['streamlit.runtime.state.session_state_proxy'] = MagicMock()
-        
+
+        # Safely insert mocks into sys.modules; monkeypatch will restore afterwards
+        monkeypatch.setitem(sys.modules, "streamlit", mock_st)
+        monkeypatch.setitem(
+            sys.modules,
+            "streamlit.runtime.state.session_state_proxy",
+            MagicMock(),
+        )
+
         # Import after mocking
         from common.step_by_step import StepByStep
-        
-        step = StepByStep()
-        
+
+        return StepByStep()
+
+    return _factory
+
+
+class TestStepByStep:
+    """Test cases for StepByStep class"""
+
+    def test_initialize_state(self, step_by_step_factory):
+        """初期状態の設定"""
+        # Create StepByStep with an empty mocked session state
+        step = step_by_step_factory()
+
         # now=0, rst=Falseが設定される
         assert step.ss.get("now") == 0
         assert step.ss.get("rst") == False
 
-    def test_countup(self):
+    def test_countup(self, step_by_step_factory):
         """ステップカウントアップ"""
-        mock_session_state = MockSessionState({"now": 0, "rst": False})
-        
-        mock_st = MagicMock()
-        mock_st.session_state = mock_session_state
-        mock_st.fragment = lambda cls: cls
-        
-        sys.modules['streamlit'] = mock_st
-        sys.modules['streamlit.runtime.state.session_state_proxy'] = MagicMock()
-        
-        from common.step_by_step import StepByStep
-        
-        step = StepByStep()
+        # Initialize with now=0, rst=False in mocked session state
+        step = step_by_step_factory({"now": 0, "rst": False})
         initial_now = step.ss["now"]
-        
+
         step.countup(reset=False)
-        
+
         # nowが1増加する
         assert step.ss["now"] == initial_now + 1
+        # rst parameter is correctly stored
         assert step.ss["rst"] == False
 
-    def test_countdown(self):
+    def test_countdown(self, step_by_step_factory):
         """ステップカウントダウン"""
-        mock_session_state = MockSessionState({"now": 2, "rst": False})
-        
-        mock_st = MagicMock()
-        mock_st.session_state = mock_session_state
-        mock_st.fragment = lambda cls: cls
-        
-        sys.modules['streamlit'] = mock_st
-        sys.modules['streamlit.runtime.state.session_state_proxy'] = MagicMock()
-        
-        from common.step_by_step import StepByStep
-        
-        step = StepByStep()
+        # Initialize with now=2, rst=False in mocked session state
+        step = step_by_step_factory({"now": 2, "rst": False})
         initial_now = step.ss["now"]
-        
+
         step.countdown()
-        
+
         # nowが1減少する
         assert step.ss["now"] == initial_now - 1
 
-    def test_reset(self):
+    def test_reset(self, step_by_step_factory):
         """リセット処理"""
-        mock_session_state = MockSessionState({"now": 5, "rst": True})
-        
-        mock_st = MagicMock()
-        mock_st.session_state = mock_session_state
-        mock_st.fragment = lambda cls: cls
-        
-        sys.modules['streamlit'] = mock_st
-        sys.modules['streamlit.runtime.state.session_state_proxy'] = MagicMock()
-        
-        from common.step_by_step import StepByStep
-        
-        step = StepByStep()
+        # Initialize with now=5, rst=True in mocked session state
+        step = step_by_step_factory({"now": 5, "rst": True})
         step.reset()
-        
+
         # now=0に戻る
         assert step.ss["now"] == 0
 
-    def test_change_state(self):
+    def test_change_state(self, step_by_step_factory):
         """状態変更処理"""
-        mock_session_state = MockSessionState({
+        # Initialize with various session state values
+        step = step_by_step_factory({
             "now": 1,
             "rst": False,
             "sample": "test_sample",
@@ -119,19 +105,9 @@ class TestStepByStep:
             "wrong_answers": ["answer1", "answer2"],
             "remaining_municipalities": ["city1", "city2"]
         })
-        
-        mock_st = MagicMock()
-        mock_st.session_state = mock_session_state
-        mock_st.fragment = lambda cls: cls
-        
-        sys.modules['streamlit'] = mock_st
-        sys.modules['streamlit.runtime.state.session_state_proxy'] = MagicMock()
-        
-        from common.step_by_step import StepByStep
-        
-        step = StepByStep()
+
         step.change_state()
-        
+
         # セッション状態がクリアされる
         assert step.ss["sample"] is None
         assert step.ss["sample_prev"] is None

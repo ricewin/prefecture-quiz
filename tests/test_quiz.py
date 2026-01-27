@@ -1,11 +1,7 @@
 """Unit tests for app/pages/quiz.py"""
 
-import pytest
 import sys
 from pathlib import Path
-
-# Add app directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent / "app"))
 
 from pages.quiz import normalize_name
 

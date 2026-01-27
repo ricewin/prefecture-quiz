@@ -1,10 +1,6 @@
 """Unit tests for app/common/const.py"""
 
-import sys
 from pathlib import Path
-
-# Add app directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent / "app"))
 
 from common.const import Const
 

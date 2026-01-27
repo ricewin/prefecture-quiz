@@ -1,10 +1,11 @@
 """Unit tests for app/common/utils.py"""
 
 import json
-import pytest
 from unittest.mock import mock_open, patch
 
-from common.utils import load_data, get_geojson_center, get_geojson_bbox
+import pytest
+
+from app.common.utils import get_geojson_bbox, get_geojson_center, load_data
 
 
 class TestLoadData:
@@ -34,8 +35,14 @@ class TestGetGeojsonCenter:
                     "geometry": {
                         "type": "Polygon",
                         "coordinates": [
-                            [[0.0, 0.0], [10.0, 0.0], [10.0, 10.0], [0.0, 10.0], [0.0, 0.0]]
-                        ]
+                            [
+                                [0.0, 0.0],
+                                [10.0, 0.0],
+                                [10.0, 10.0],
+                                [0.0, 10.0],
+                                [0.0, 0.0],
+                            ]
+                        ],
                     }
                 }
             ]
@@ -53,12 +60,24 @@ class TestGetGeojsonCenter:
                         "type": "MultiPolygon",
                         "coordinates": [
                             [
-                                [[0.0, 0.0], [5.0, 0.0], [5.0, 5.0], [0.0, 5.0], [0.0, 0.0]]
+                                [
+                                    [0.0, 0.0],
+                                    [5.0, 0.0],
+                                    [5.0, 5.0],
+                                    [0.0, 5.0],
+                                    [0.0, 0.0],
+                                ]
                             ],
                             [
-                                [[5.0, 5.0], [10.0, 5.0], [10.0, 10.0], [5.0, 10.0], [5.0, 5.0]]
-                            ]
-                        ]
+                                [
+                                    [5.0, 5.0],
+                                    [10.0, 5.0],
+                                    [10.0, 10.0],
+                                    [5.0, 10.0],
+                                    [5.0, 5.0],
+                                ]
+                            ],
+                        ],
                     }
                 }
             ]
@@ -82,10 +101,16 @@ class TestGetGeojsonCenter:
                     "geometry": {
                         "type": "Polygon",
                         "coordinates": [
-                            [[0.0, 0.0], [10.0, 0.0], [10.0, 10.0], [0.0, 10.0], [0.0, 0.0]]
-                        ]
+                            [
+                                [0.0, 0.0],
+                                [10.0, 0.0],
+                                [10.0, 10.0],
+                                [0.0, 10.0],
+                                [0.0, 0.0],
+                            ]
+                        ],
                     }
-                }
+                },
             ]
         }
         center_lat, center_lon = get_geojson_center(geojson)
@@ -104,8 +129,14 @@ class TestGetGeojsonBbox:
                     "geometry": {
                         "type": "Polygon",
                         "coordinates": [
-                            [[0.0, 0.0], [10.0, 0.0], [10.0, 10.0], [0.0, 10.0], [0.0, 0.0]]
-                        ]
+                            [
+                                [0.0, 0.0],
+                                [10.0, 0.0],
+                                [10.0, 10.0],
+                                [0.0, 10.0],
+                                [0.0, 0.0],
+                            ]
+                        ],
                     }
                 }
             ]

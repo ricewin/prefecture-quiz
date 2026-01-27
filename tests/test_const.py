@@ -1,6 +1,6 @@
 """Unit tests for app/common/const.py"""
 
-from common.const import Const
+from app.common.const import Const
 
 
 class TestConst:

@@ -1,6 +1,6 @@
 """Unit tests for app/pages/quiz.py"""
 
-from pages.quiz import normalize_name
+from app.pages.quiz import normalize_name
 
 
 class TestNormalizeName:
@@ -27,7 +27,7 @@ class TestNormalizeName:
 
     def test_normalize_name_none(self):
         """None値の処理"""
-        assert normalize_name(None) == ""
+        assert normalize_name(None) == ""  # pyright: ignore[reportArgumentType]
 
     def test_normalize_name_empty(self):
         """空文字列の処理"""

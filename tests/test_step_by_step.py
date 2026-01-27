@@ -8,12 +8,15 @@ import pytest
 
 class MockSessionState(dict):
     """Mock class that behaves like Streamlit's session state"""
+
     def __getattr__(self, name):
         try:
             return self[name]
         except KeyError:
-            raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
-    
+            raise AttributeError(
+                f"'{type(self).__name__}' object has no attribute '{name}'"
+            )
+
     def __setattr__(self, name, value):
         self[name] = value
 
@@ -40,7 +43,7 @@ def step_by_step_factory(monkeypatch):
         )
 
         # Import after mocking
-        from common.step_by_step import StepByStep
+        from app.common.step_by_step import StepByStep
 
         return StepByStep()
 
@@ -57,7 +60,7 @@ class TestStepByStep:
 
         # now=0, rst=Falseが設定される
         assert step.ss.get("now") == 0
-        assert step.ss.get("rst") == False
+        assert not step.ss.get("rst")
 
     def test_countup(self, step_by_step_factory):
         """ステップカウントアップ"""
@@ -70,7 +73,7 @@ class TestStepByStep:
         # nowが1増加する
         assert step.ss["now"] == initial_now + 1
         # rst parameter is correctly stored
-        assert step.ss["rst"] == False
+        assert not step.ss["rst"]
 
     def test_countdown(self, step_by_step_factory):
         """ステップカウントダウン"""
@@ -95,15 +98,17 @@ class TestStepByStep:
     def test_change_state(self, step_by_step_factory):
         """状態変更処理"""
         # Initialize with various session state values
-        step = step_by_step_factory({
-            "now": 1,
-            "rst": False,
-            "sample": "test_sample",
-            "sample_prev": "test_prev",
-            "correct_count": 5,
-            "wrong_answers": ["answer1", "answer2"],
-            "remaining_municipalities": ["city1", "city2"]
-        })
+        step = step_by_step_factory(
+            {
+                "now": 1,
+                "rst": False,
+                "sample": "test_sample",
+                "sample_prev": "test_prev",
+                "correct_count": 5,
+                "wrong_answers": ["answer1", "answer2"],
+                "remaining_municipalities": ["city1", "city2"],
+            }
+        )
 
         step.change_state()
 

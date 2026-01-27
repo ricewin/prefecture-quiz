@@ -2,7 +2,6 @@
 
 import json
 import pytest
-from pathlib import Path
 from unittest.mock import mock_open, patch
 
 from common.utils import load_data, get_geojson_center, get_geojson_bbox

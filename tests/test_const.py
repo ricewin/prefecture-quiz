@@ -1,7 +1,5 @@
 """Unit tests for app/common/const.py"""
 
-from pathlib import Path
-
 from common.const import Const
 
 

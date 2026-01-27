@@ -1,8 +1,5 @@
 """Unit tests for app/pages/quiz.py"""
 
-import sys
-from pathlib import Path
-
 from pages.quiz import normalize_name
 
 

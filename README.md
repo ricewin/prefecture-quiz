@@ -9,6 +9,7 @@ ANNOUNCEMENT: This app uses open data content[^1].
 
 ---
 
+[![CI](https://github.com/ricewin/prefecture-quiz/actions/workflows/ci.yml/badge.svg)](https://github.com/ricewin/prefecture-quiz/actions/workflows/ci.yml)
 [![Zenn](https://img.shields.io/badge/Zenn-pfirsich-turquoise?logo=zenn)](https://zenn.dev/pfirsich)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)

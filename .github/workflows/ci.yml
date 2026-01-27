@@ -7,6 +7,35 @@ on:
     branches: [ main, develop ]
 
 jobs:
+  lint:
+    name: Lint and Format Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      
+      - name: Install uv
+        run: |
+          pip install uv
+      
+      - name: Install dependencies
+        run: |
+          uv sync --all-extras
+      
+      - name: Run ruff linter
+        run: |
+          uv run ruff check app/
+      
+      - name: Run ruff format check
+        run: |
+          uv run ruff format --check app/
+
   test:
     name: Test on Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
@@ -30,10 +59,6 @@ jobs:
       - name: Install dependencies
         run: |
           uv sync --all-extras
-      
-      - name: Run linter
-        run: |
-          uv run ruff check app/
       
       - name: Run tests with coverage
         run: |

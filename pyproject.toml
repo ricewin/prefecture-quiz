@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "prefecture-quiz"
 version = "0.1.0"
@@ -7,6 +11,11 @@ requires-python = ">=3.14"
 dependencies = [
     "streamlit>=1.53.0",
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+exclude = ["tests*", "activate*"]
 
 [project.optional-dependencies]
 dev = [

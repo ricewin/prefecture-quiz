@@ -1,6 +1,11 @@
 {
     "cSpell.words": [
+        "addopts",
+        "multipolygon",
         "prefs",
-        "qlabel"
+        "pythonpath",
+        "qlabel",
+        "setuptools",
+        "testpaths"
     ]
 }
